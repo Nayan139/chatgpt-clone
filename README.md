@@ -2,6 +2,8 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 ## Getting Started
 
+I've cloned ChatGPT using Next.js 13, Tailwind CSS, Firebase for message storage, TypeScript, and the OpenAI API. Building this project has been a wonderful experience, and it allowed me to learn many more features of Next.js.
+
 First, run the development server:
 
 ```bash
@@ -34,3 +36,4 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+# chatgpt-clone
