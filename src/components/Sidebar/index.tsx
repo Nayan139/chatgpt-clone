@@ -1,5 +1,8 @@
+"use client";
 import React from "react";
+
 import NewChat from "@/components/NewChat";
+import Profile from "@/components/Profile";
 
 type Props = {};
 
@@ -17,6 +20,7 @@ const Sidebar = (props: Props) => {
           {/* Map through the chat rows */}
         </div>
       </div>
+      <Profile />
     </div>
   );
 };
