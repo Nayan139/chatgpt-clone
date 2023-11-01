@@ -1,9 +1,11 @@
 "use client";
 import { signIn } from "next-auth/react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import React from "react";
 
 const Login = () => {
+  const router = useRouter();
   return (
     <div className="h-screen w-screen flex flex-col items-center justify-center text-center bg-[#11A37F]">
       <Image
@@ -12,12 +14,15 @@ const Login = () => {
         width={300}
         alt="logo"
       />
-      <button
-        onClick={() => signIn("google")}
+      <div
+        onClick={() => {
+          signIn("google");
+          router.push("/landing");
+        }}
         className="text-white font-bold text-3xl animate-pulse border border-solid border-white p-3 rounded-lg hover:border-solid max-md:text-sm"
       >
         Sign in to use ChatGPT
-      </button>
+      </div>
     </div>
   );
 };
