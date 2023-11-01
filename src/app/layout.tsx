@@ -2,10 +2,11 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
 import Sidebar from "@/components/Sidebar";
-import SessionProvider from "@/provider/SessionProvider";
+import SessionProvider from "@/provider/sessionProvider";
 import { getServerSession } from "next-auth";
 import { authOptions } from "./api/auth/[...nextauth]/route";
 import Login from "@/components/Login";
+import ChatProvider from "@/provider/chatProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -21,24 +22,25 @@ export default async function RootLayout({
 }) {
   const session = await getServerSession(authOptions);
 
-  console.log("session :>> ", session);
   return (
     <html lang="en">
       <body className={inter.className}>
         <SessionProvider session={session}>
-          {!session ? (
-            <Login />
-          ) : (
-            <div className="flex">
-              <div className="bg-[#202123] max-w-xs h-screen overflow-y-auto md:min-w-[20rem]">
-                {/* Sidebar */}
-                <Sidebar />
-              </div>
-              {/* Client Provider Notification */}
+          <ChatProvider>
+            {!session ? (
+              <Login />
+            ) : (
+              <div className="flex">
+                <div className="bg-[#202123] max-w-xs h-screen overflow-y-auto md:min-w-[20rem]">
+                  {/* Sidebar */}
+                  <Sidebar />
+                </div>
+                {/* Client Provider Notification */}
 
-              <div className="bg-[#565869] flex-1">{children}</div>
-            </div>
-          )}
+                <div className="bg-[#565869] flex-1">{children}</div>
+              </div>
+            )}
+          </ChatProvider>
         </SessionProvider>
       </body>
     </html>
