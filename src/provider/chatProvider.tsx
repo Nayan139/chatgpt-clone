@@ -29,14 +29,14 @@ const ChatProvider = ({ children }: ChatProviderProps) => {
       console.error("error :>> ", error);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [session?.user?.email!]);
+  }, [session?.user?.email]);
 
   /**
    * Call on the component mount
    */
   useEffect(() => {
-    if (session?.user?.email!) fetchChats();
-  }, [fetchChats, session?.user?.email!]);
+    if (session?.user?.email) fetchChats();
+  }, [fetchChats, session?.user?.email]);
 
   const chatContextValue: ChatContextProps = {
     chats,

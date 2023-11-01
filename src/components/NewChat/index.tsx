@@ -5,8 +5,9 @@ import { PlusCircleIcon } from "@heroicons/react/24/solid";
 import { useRouter } from "next/navigation";
 import { db } from "@/firebase";
 import useSession from "@/hooks/useSession";
+import useChat from "@/hooks/useChat";
 
-const NewChat = () => {
+const NewChat = ({ getFetchChat }: { getFetchChat: () => void }) => {
   //Hooks
   const router = useRouter();
   const { session } = useSession();
@@ -23,7 +24,10 @@ const NewChat = () => {
           createdAt: serverTimestamp(),
         }
       );
-      if (doc.id) router.push(`/chat/${doc.id}`);
+      if (doc.id) {
+        getFetchChat();
+        router.push(`/chat/${doc.id}`);
+      }
     } catch (error) {
       console.error(error);
     }
