@@ -1,7 +1,9 @@
-import { createContext } from "react";
+import { Dispatch, SetStateAction, createContext } from "react";
 
 export interface ChatContextProps {
   chats: string[];
+  setChats:Dispatch<SetStateAction<string[]>>
+
   fetchChats: (callback?: () => void) => void;
 }
 

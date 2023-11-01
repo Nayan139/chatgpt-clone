@@ -21,7 +21,7 @@ const Sidebar = (props: Props) => {
       <div className="flex-1">
         <div>
           {/* New Chat */}
-          <NewChat getFetchChat={() => fetchChats} />
+          <NewChat />
           <div>{/* Model Selecttion */}</div>
           {/* Map through the chat rows */}
           {chats?.length

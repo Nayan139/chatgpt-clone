@@ -7,10 +7,11 @@ import { db } from "@/firebase";
 import useSession from "@/hooks/useSession";
 import useChat from "@/hooks/useChat";
 
-const NewChat = ({ getFetchChat }: { getFetchChat: () => void }) => {
+const NewChat = () => {
   //Hooks
   const router = useRouter();
   const { session } = useSession();
+  const { chats, setChats } = useChat();
 
   /**
    * This Method is used for create a userCollection in the Firestore
@@ -24,8 +25,8 @@ const NewChat = ({ getFetchChat }: { getFetchChat: () => void }) => {
           createdAt: serverTimestamp(),
         }
       );
-      if (doc.id) {
-        getFetchChat();
+      if (doc.id && chats && setChats) {
+        setChats(() => [...chats, doc.id]);
         router.push(`/chat/${doc.id}`);
       }
     } catch (error) {

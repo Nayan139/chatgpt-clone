@@ -41,6 +41,7 @@ const ChatProvider = ({ children }: ChatProviderProps) => {
   const chatContextValue: ChatContextProps = {
     chats,
     fetchChats,
+    setChats,
   };
   return (
     <ChatContext.Provider value={chatContextValue}>

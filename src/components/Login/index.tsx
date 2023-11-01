@@ -7,7 +7,7 @@ import React from "react";
 const Login = () => {
   const router = useRouter();
   return (
-    <div className="h-screen w-screen flex flex-col items-center justify-center text-center bg-[#11A37F]">
+    <div className="h-screen w-screen flex cursor-pointer flex-col items-center justify-center text-center bg-[#11A37F]">
       <Image
         src="https://links.papareact.com/2i6"
         height={300}
