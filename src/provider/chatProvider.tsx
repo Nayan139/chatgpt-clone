@@ -1,7 +1,7 @@
 "use client";
 import React, { useCallback, useEffect, useState } from "react";
 import ChatContext from "@/context/chatContext";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs, orderBy, query } from "firebase/firestore";
 import { db } from "@/firebase";
 import { ChatContextProps } from "@/context/chatContext";
 import useSession from "@/hooks/useSession";
@@ -20,7 +20,10 @@ const ChatProvider = ({ children }: ChatProviderProps) => {
   const fetchChats = useCallback(async () => {
     try {
       const querySnapshot = await getDocs(
-        collection(db, "users", session?.user?.email!, "chats")
+        query(
+          collection(db, "users", session?.user?.email!, "chats"),
+          orderBy("createdAt", "asc")
+        )
       );
       querySnapshot.forEach((doc) => {
         setChats((prevChat) => [...prevChat, doc.id]);
