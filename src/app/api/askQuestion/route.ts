@@ -1,6 +1,7 @@
 import { adminDb } from "@/firebase/firebaseAdmin";
 import query from "@/utils/queryAPI";
 import admin from "firebase-admin";
+import { uuid } from "uuidv4";
 
 export async function POST(request: Request) {
   try {
@@ -20,6 +21,7 @@ export async function POST(request: Request) {
     const response = await query(prompt, chatId, model);
 
     const message: Message = {
+      id: uuid(),
       text: response || "ChatGPT has unable to find an answer for that!",
       createdAt: admin.firestore.Timestamp.now(),
       user: {
