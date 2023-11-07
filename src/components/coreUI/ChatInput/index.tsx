@@ -16,7 +16,7 @@ const ChatInput = ({ chatId }: ChatInputProps) => {
   console.log("value :session>> ", value, session);
 
   //TODO useSWR get model
-  const model = "text-devinci-003";
+  const model = "text-davinci-003";
 
   /**
    * This method is using for the submit the question to the openAI
@@ -53,7 +53,7 @@ const ChatInput = ({ chatId }: ChatInputProps) => {
       );
 
       //Toast notification
-      const notification = toast.success("Successfully toasted!");
+      const notification = toast.success("ChatGPT is thinking...");
 
       //Sever API
       const response = await fetch("/api/askQuestion", {
