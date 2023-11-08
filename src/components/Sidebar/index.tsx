@@ -3,7 +3,8 @@ import React, { useEffect } from "react";
 import NewChat from "@/components/NewChat";
 import Profile from "@/components/Profile";
 import useChat from "@/hooks/useChat";
-import ChatRow from "../ChatRow";
+import ChatRow from "@/components/ChatRow";
+import ModelSelection from "@/components/ModelSelection";
 
 type Props = {};
 
@@ -21,7 +22,9 @@ const Sidebar = (props: Props) => {
         <div>
           {/* New Chat */}
           <NewChat />
-          <div>{/* Model Selecttion */}</div>
+          <div className="hidden sm:inline">
+            <ModelSelection />
+          </div>
           {/* Map through the chat rows */}
           {chats?.length
             ? chats.map((chat: string, index: number) => (
