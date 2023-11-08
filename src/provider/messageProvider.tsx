@@ -11,11 +11,13 @@ type MessageProviderProps = { children: React.ReactNode };
 const MessageProvider = ({ children }: MessageProviderProps) => {
   //States
   const [messsages, setMessages] = useState<Message[]>([]);
+  const [chatID, setChatID] = useState<string>("");
   //Hooks
   const { session } = useSession();
 
   const fetchMessages = async (chatId: string = "") => {
     try {
+      setMessages([]);
       const querySnapshot = await getDocs(
         query(
           collection(
@@ -52,14 +54,16 @@ const MessageProvider = ({ children }: MessageProviderProps) => {
   //   /**
   //    * Call on the component mount
   //    */
-  //   useEffect(() => {
-  //     if (session?.user?.email) fetchMessages();
-  //   }, []);
-
+  useEffect(() => {
+    if (session?.user?.email) fetchMessages();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [chatID]);
   const messageContextValue: MessageContextProps = {
     messsages,
     setMessages,
     fetchMessages,
+    chatID,
+    setChatID,
   };
   return (
     <MessafeContext.Provider value={messageContextValue}>

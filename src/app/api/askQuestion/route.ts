@@ -22,6 +22,7 @@ export async function POST(request: Request) {
 
     const message: Message = {
       id: uuid(),
+      chatId: chatId,
       text: response || "ChatGPT has unable to find an answer for that!",
       createdAt: admin.firestore.Timestamp.now(),
       user: {

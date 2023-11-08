@@ -1,5 +1,11 @@
 "use client";
-import React, { FormEvent, useContext, useEffect, useState } from "react";
+import React, {
+  FormEvent,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 import Chat from "@/components/Chat";
 import ChatInput from "@/components/coreUI/ChatInput";
 import { ChatPageProps } from "@/types/components/ChatPage";
@@ -20,11 +26,13 @@ const ChatPage = ({ params: { id } }: ChatPageProps) => {
   const [value, setvalue] = useState<string>("");
 
   //TODO useSWR get model
-  const model = "text-davinci-003";
+  const model = "ada";
 
-  // useEffect(() => {
-  //   messsages?.fetchMessages(id);
-  // }, [messsages, id]);
+  useEffect(() => {
+    messsages?.setChatID(id);
+    messsages?.fetchMessages(id);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [id]);
 
   /**
    * This method is using for the submit the question to the openAI
@@ -38,8 +46,10 @@ const ChatPage = ({ params: { id } }: ChatPageProps) => {
       const input = value;
       setvalue("");
 
+      const uid = uuid();
       const message: Message = {
-        id: uuid(),
+        id: uid,
+        chatId: id,
         text: input,
         createdAt: serverTimestamp(),
         user: {
@@ -53,7 +63,7 @@ const ChatPage = ({ params: { id } }: ChatPageProps) => {
         collection(db, "users", session?.user?.email!, "chats", id, "messages"),
         message
       );
-
+      messsages?.fetchMessages(id);
       //Toast notification
       const notification = toast.success("ChatGPT is thinking...");
 
@@ -63,7 +73,13 @@ const ChatPage = ({ params: { id } }: ChatPageProps) => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ prompt: input, chatId: id, model, session }),
+        body: JSON.stringify({
+          prompt: input,
+          chatId: id,
+          id: uid,
+          model,
+          session,
+        }),
       });
 
       if (response) {
