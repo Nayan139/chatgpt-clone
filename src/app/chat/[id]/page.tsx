@@ -94,10 +94,6 @@ const ChatPage = ({ params: { id } }: ChatPageProps) => {
     }
   };
 
-  console.log(
-    "messsagesmesssagesmesssagesmesssages :>> ",
-    messsages?.messsages
-  );
   return (
     <div className="h-screen flex flex-col overflow-hidden p-4">
       {/* Chat */}

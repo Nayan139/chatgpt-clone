@@ -10,7 +10,6 @@ type Props = {};
 const Sidebar = (props: Props) => {
   //hooks
   const { chats, fetchChats } = useChat();
-  console.log("chats :>> ", chats);
   useEffect(() => {
     fetchChats;
     // eslint-disable-next-line react-hooks/exhaustive-deps

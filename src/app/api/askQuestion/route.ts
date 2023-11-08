@@ -6,7 +6,6 @@ import { uuid } from "uuidv4";
 export async function POST(request: Request) {
   try {
     const req = await request.json();
-    console.log("req.body :>> ", req);
     const { prompt, chatId, model, session } = req;
     if (!prompt) {
       Response.error();
