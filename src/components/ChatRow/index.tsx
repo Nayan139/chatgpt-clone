@@ -1,7 +1,15 @@
+"use client";
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { deleteDoc, doc } from "firebase/firestore";
+import {
+  collection,
+  deleteDoc,
+  doc,
+  getDocs,
+  orderBy,
+  query,
+} from "firebase/firestore";
 import { ChatBubbleLeftIcon, TrashIcon } from "@heroicons/react/24/outline";
 import { db } from "@/firebase";
 import useSession from "@/hooks/useSession";
@@ -18,6 +26,7 @@ const ChatRow = ({ id }: ChatRowProps) => {
 
   //State
   const [active, setActive] = useState(false);
+  const [title, setTitle] = useState<string>("");
 
   useEffect(() => {
     if (!pathname) return;
@@ -41,13 +50,45 @@ const ChatRow = ({ id }: ChatRowProps) => {
     }
   };
 
+  /**
+   * This method is used for the get title for the sidebar
+   */
+  const handleTitle = async () => {
+    try {
+      const querySnapshot = await getDocs(
+        query(
+          collection(
+            db,
+            "users",
+            session?.user?.email!,
+            "chats",
+            id,
+            "messages"
+          ),
+          orderBy("createdAt", "asc")
+        )
+      );
+      setTitle(
+        querySnapshot.docs[querySnapshot.docs.length - 1].data().text ||
+          "New Chat"
+      );
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    handleTitle();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [id]);
+
   return (
     <Link
       href={`/chat/${id}`}
       className={`chatRow justify-center mt-2 ${active && "bg-gray-700/50"}`}
     >
       <ChatBubbleLeftIcon className="h-5 w-5" />
-      <p className="flex-1 hidden md:inline-flex truncate"> New Chat</p>
+      <p className="flex-1 hidden md:inline-flex truncate">{title} New Chat</p>
       <TrashIcon
         onClick={removedChats}
         className="h-5 w-5 text-gray-700 hover:text-red-700"

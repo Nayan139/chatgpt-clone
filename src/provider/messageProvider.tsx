@@ -2,7 +2,14 @@
 import MessafeContext, { MessageContextProps } from "@/context/messageContext";
 import { db } from "@/firebase";
 import useSession from "@/hooks/useSession";
-import { collection, getDocs, orderBy, query } from "firebase/firestore";
+import {
+  DocumentData,
+  QueryDocumentSnapshot,
+  collection,
+  getDocs,
+  orderBy,
+  query,
+} from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import { uuid } from "uuidv4";
 
@@ -31,21 +38,23 @@ const MessageProvider = ({ children }: MessageProviderProps) => {
           orderBy("createdAt", "asc")
         )
       );
-      querySnapshot.forEach((doc) => {
-        const newMessage = { ...(doc.data() as Message) };
-        setMessages((prevChat) => {
-          const existingIndex = prevChat.findIndex(
-            (message) => message.id === newMessage.id
-          );
-          return existingIndex !== -1
-            ? [
-                ...prevChat.slice(0, existingIndex),
-                newMessage,
-                ...prevChat.slice(existingIndex + 1),
-              ]
-            : [...prevChat, newMessage];
-        });
-      });
+      querySnapshot.forEach(
+        (doc: QueryDocumentSnapshot<DocumentData, DocumentData>) => {
+          const newMessage = { ...(doc.data() as Message) };
+          setMessages((prevChat) => {
+            const existingIndex = prevChat.findIndex(
+              (message) => message.id === newMessage.id
+            );
+            return existingIndex !== -1
+              ? [
+                  ...prevChat.slice(0, existingIndex),
+                  newMessage,
+                  ...prevChat.slice(existingIndex + 1),
+                ]
+              : [...prevChat, newMessage];
+          });
+        }
+      );
     } catch (error) {
       console.error("error :>> ", error);
     }
