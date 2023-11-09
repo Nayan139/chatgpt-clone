@@ -2,7 +2,7 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 
 ## Getting Started
 
-I've cloned ChatGPT using Next.js 13, Tailwind CSS, Firebase for message storage, TypeScript, and the OpenAI API. Building this project has been a wonderful experience, and it allowed me to learn many more features of Next.js.
+I've cloned ChatGPT using Next.js 13, Tailwind CSS, Firebase for message storage, TypeScript,SWR and the OpenAI API. Building this project has been a wonderful experience, and it allowed me to learn many more features of Next.js.
 
 First, run the development server:
 

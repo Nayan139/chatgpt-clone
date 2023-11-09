@@ -15,10 +15,15 @@ import { db } from "@/firebase";
 import useSession from "@/hooks/useSession";
 import MessafeContext from "@/context/messageContext";
 import { uuid } from "uuidv4";
+import useSWR from "swr";
 
 const ChatPage = ({ params: { id } }: ChatPageProps) => {
   //hooks
   const { session } = useSession();
+  const { data: model } = useSWR("model", {
+    fallbackData: "text-davinci-003",
+  });
+
   //TODO
   const messsages = useContext(MessafeContext);
 
@@ -26,7 +31,6 @@ const ChatPage = ({ params: { id } }: ChatPageProps) => {
   const [value, setvalue] = useState<string>("");
 
   //TODO useSWR get model
-  const model = "ada";
 
   useEffect(() => {
     messsages?.setChatID(id);

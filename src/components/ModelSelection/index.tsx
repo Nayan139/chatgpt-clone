@@ -12,14 +12,13 @@ const ModelSelection = () => {
   const { data: model, mutate: setModel } = useSWR("model", {
     fallbackData: "text-davinci-003",
   });
-
   return (
     <div>
       <ReactSelect
         className="mt-2"
         placeholder={model}
         defaultValue={model}
-        options={models}
+        options={models?.modelOptions}
         isSearchable
         isLoading={isLoading}
         menuPosition="fixed"
