@@ -13,7 +13,7 @@ const ModelSelection = () => {
     fallbackData: "text-davinci-003",
   });
   return (
-    <div>
+    <div className="mt-2">
       <ReactSelect
         className="mt-2"
         placeholder={model}
@@ -22,8 +22,8 @@ const ModelSelection = () => {
         isSearchable
         isLoading={isLoading}
         menuPosition="fixed"
-        onChange={(e) => setModel(e.value)}
         classNames={{ control: (state) => "bg-[#434654] border-[#434654]" }}
+        onChange={(e) => setModel(e.value)}
       />
     </div>
   );

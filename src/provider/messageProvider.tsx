@@ -11,7 +11,6 @@ import {
   query,
 } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
-import { uuid } from "uuidv4";
 
 type MessageProviderProps = { children: React.ReactNode };
 
@@ -20,21 +19,14 @@ const MessageProvider = ({ children }: MessageProviderProps) => {
   const [messsages, setMessages] = useState<Message[]>([]);
   const [chatID, setChatID] = useState<string>("");
   //Hooks
-  const { session } = useSession();
+  // const { session } = useSession();
 
-  const fetchMessages = async (chatId: string = "") => {
+  const fetchMessages = async (chatId: string = "", email: string = "") => {
     try {
       setMessages([]);
       const querySnapshot = await getDocs(
         query(
-          collection(
-            db,
-            "users",
-            session?.user?.email!,
-            "chats",
-            chatId,
-            "messages"
-          ),
+          collection(db, "users", email!, "chats", chatId, "messages"),
           orderBy("createdAt", "asc")
         )
       );
@@ -60,13 +52,6 @@ const MessageProvider = ({ children }: MessageProviderProps) => {
     }
   };
 
-  //   /**
-  //    * Call on the component mount
-  //    */
-  useEffect(() => {
-    if (session?.user?.email) fetchMessages();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [chatID]);
   const messageContextValue: MessageContextProps = {
     messsages,
     setMessages,

@@ -33,10 +33,12 @@ const ChatPage = ({ params: { id } }: ChatPageProps) => {
   //TODO useSWR get model
 
   useEffect(() => {
-    messsages?.setChatID(id);
-    messsages?.fetchMessages(id);
+    if (session?.user?.email && id) {
+      messsages?.setChatID(id);
+      messsages?.fetchMessages(id, session?.user?.email!);
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [id]);
+  }, [id, session?.user?.email]);
 
   /**
    * This method is using for the submit the question to the openAI
@@ -67,7 +69,7 @@ const ChatPage = ({ params: { id } }: ChatPageProps) => {
         collection(db, "users", session?.user?.email!, "chats", id, "messages"),
         message
       );
-      messsages?.fetchMessages(id);
+      messsages?.fetchMessages(id, session?.user?.email!);
       //Toast notification
       const notification = toast.success("ChatGPT is thinking...");
 
@@ -90,7 +92,7 @@ const ChatPage = ({ params: { id } }: ChatPageProps) => {
         toast.success("ChatGPT has responded!", {
           id: notification,
         });
-        messsages?.fetchMessages(id);
+        messsages?.fetchMessages(id, session?.user?.email!);
       }
     } catch (error) {
       console.error(error);

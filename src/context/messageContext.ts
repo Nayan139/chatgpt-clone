@@ -4,7 +4,7 @@ import { Dispatch, SetStateAction, createContext } from "react";
 export interface MessageContextProps {
   messsages: Message[];
   setMessages: Dispatch<SetStateAction<Message[]>>;
-  fetchMessages: (chatId: string) => void;
+  fetchMessages: (chatId: string, email: string) => void;
   chatID: string;
   setChatID: Dispatch<SetStateAction<string>>;
 }
